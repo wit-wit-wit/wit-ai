@@ -79,10 +79,10 @@ class Inference:
 
         logits = ort_session.run(output_name, ort_inputs)
         # top_ten = logits[0].argmax(1)
-        top_ten = np.argsort(logits[0], 1)[:top_k]
+        top_ten = np.argsort(logits[0], 1)[0][:top_k]
 
         top_ten_place = []
-        for label in top_ten[0]:
+        for label in top_ten:
             place = self.label_dict[label]
             top_ten_place.append(place)
 
