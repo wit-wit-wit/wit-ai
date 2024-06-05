@@ -37,8 +37,8 @@ class Inference:
                            111: '청계천', 112: '청량사(서울)', 113: '청와대', 114: '초안산', 115: '최순우 옛집', 116: '충무공 이순신 동상', 117: '코코넛박스',
                            118: '템플스테이 홍보관', 119: '파크하비오 워터킹덤&스파', 120: '한강시민공원 뚝섬지구(뚝섬한강공원)', 121: '해풍부원군윤택영댁재실', 122: '흥인지문공원'}
 
-    def base64_2_image(self, base64_img):
-        image = Image.open(io.BytesIO(base64.b64decode(base64_img)))
+    def base64_2_image(self, base64_string):
+        image = Image.open(io.BytesIO(base64.b64decode(base64_string)))
         image = np.array(image)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = self.jpg_compress(image)
@@ -60,11 +60,11 @@ class Inference:
     def to_numpy(self, tensor):
         return tensor.detach().cpu().numpy() if tensor.requires_grad else tensor.cpu().numpy()
 
-    def searching(self, base64_img, keyword=None, top_k=10):
+    def searching(self, base64_string, keyword=None, top_k=10):
         img_trans = transforms.Compose([transforms.Resize((224, 224)),
                                         transforms.ToTensor(),
                                         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
-        image = img_trans(self.base64_2_image(base64_img))
+        image = img_trans(self.base64_2_image(base64_string))
 
         if keyword is None:
             keyword = [0 for _ in range(17)]
@@ -89,8 +89,16 @@ class Inference:
         return top_ten_place
 
 
-def image_search(img, keyword=None, top_k=10):
+def image_search(base64_string, keyword=None, top_k=10):
     inf = Inference()
-    result = inf.searching(img, keyword, top_k)
+    result = inf.searching(base64_string, keyword, top_k)
 
     return result
+
+
+if __name__ == '__main__':
+    with open('./202205261429481961.jpg', 'rb') as img:
+        base64_string = base64.b64encode(img.read())
+
+    result = image_search(base64_string)
+    print(result)
