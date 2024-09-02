@@ -3,6 +3,7 @@
 2. pip install -r requirements.txt
 
 ## < Inference만 진행할 시 >
+Inferece 만 진행할 시에는 model_weight와 inference.py만 있어도 됩니다.
 1. pip install torch==2.3.0 torchvision==0.18.0
 2. pip install -r inference_only_requirements.txt
 
