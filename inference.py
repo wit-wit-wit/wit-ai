@@ -67,7 +67,7 @@ class Inference:
         image = img_trans(self.base64_2_image(base64_string))
 
         if keyword is None:
-            keyword = [0 for _ in range(17)]
+            keyword = [1 for _ in range(17)]
         keyword = torch.tensor(keyword, dtype=torch.float32)
 
         ort_session = onnxruntime.InferenceSession('./model_weight/ImageSearchModel.onnx',
@@ -79,7 +79,7 @@ class Inference:
 
         logits = ort_session.run(output_name, ort_inputs)
         # top_ten = logits[0].argmax(1)
-        top_ten = np.argsort(logits[0], 1)[0][:top_k]
+       top_ten = np.argsort(logits[0][0])[::-1][:top_k]
 
         top_ten_place = []
         for label in top_ten:
