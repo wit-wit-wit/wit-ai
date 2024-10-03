@@ -60,6 +60,17 @@ class SwinImageEncoder(nn.Module):
         return self.model(x)
 
 
+class ViTImageEncoder(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.model = timm.create_model('vit_base_patch8_224', num_classes=0, pretrained=True)
+        # self.linear = nn.Linear(1536, 1024)
+
+    def forward(self, x):
+        # x = self.model(x)
+        return self.model(x)
+
+
 if __name__ == '__main__':
     a = SwinImageEncoder()
 
