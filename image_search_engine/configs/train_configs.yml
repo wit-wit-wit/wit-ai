@@ -13,11 +13,11 @@ tr_dataset_path: "M:/Side/2024_TourAPI/DB/train.csv"
 te_dataset_path: "M:/Side/2024_TourAPI/DB/test.csv"
 
 
-ckp_path: "M:/Side/2024_TourAPI/backup/Swin_Keyword/try_3/ckp"
-log_path: "M:/Side/2024_TourAPI/backup/Swin_Keyword/try_3/log"
+ckp_path: "M:/Side/2024_TourAPI/backup/resnet101_Keyword/try_3/ckp"
+log_path: "M:/Side/2024_TourAPI/backup/resnet101_Keyword/try_3/log"
 
 # Train
-model_name: 'swintransformer'
+model_name: 'resnet101'
 cls_num: 123
 num_keywords: 17
 seed: 1004
@@ -25,7 +25,7 @@ seed: 1004
 epoch: 50
 device: "cuda"
 
-lr: 0.001
+lr: 0.00001
 
 batch_size: 8
 weight_decay: 0.00001
